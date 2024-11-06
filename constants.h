@@ -21,14 +21,12 @@ extern const int hcircle_pattern[];
 // TODO:
 extern const int hcircle_pattern_size;
 
-typedef struct ScalePatternStruct
-{
+typedef struct ScalePatternStruct {
     const int *value;
     const int size;
 } ScalePatternType;
 
-typedef struct ScalePatterns
-{
+typedef struct ScalePatterns {
     ScalePatternType MAJOR_SCALE;
     ScalePatternType MINOR_SCALE;
     ScalePatternType MAJOR_CHORDS;
@@ -36,8 +34,7 @@ typedef struct ScalePatterns
     ScalePatternType HARMONIC_CIRCLE;
 } ScalePatternsType;
 
-typedef struct ScaleType
-{
+typedef struct ScaleType {
     char *MAJOR_SCALE;
     char *MINOR_SCALE;
     char *MAJOR_CHORDS;

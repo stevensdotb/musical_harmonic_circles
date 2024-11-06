@@ -7,10 +7,8 @@
 
 /* Find note index in MUSICAL_NOTES */
 static int
-find_index(const char *note)
-{
-    for (int i = 0; i < chromatic_scale_size; i++)
-    {
+find_index(const char *note) {
+    for (int i = 0; i < chromatic_scale_size; i++) {
         if (strcmp(chromatic_scale[i], note) == 0)
         {
             return i;
@@ -20,30 +18,24 @@ find_index(const char *note)
 }
 
 /* Prints the Tone, semi-tone pattern*/
-static void print_scale_pattern(ScalePatternType scale_pattern)
-{
+static void print_scale_pattern(ScalePatternType scale_pattern) {
     // TODO: Print the scale pattern based on the scale type
 }
 
 /* Gets the scale pattern by type */
-ScalePatternType get_scale_pattern(char *scale_t)
-{
-    if (strcmp(scale_t, scale_type.MAJOR_SCALE) == 0)
-    {
+ScalePatternType get_scale_pattern(char *scale_t) {
+    if (strcmp(scale_t, scale_type.MAJOR_SCALE) == 0) {
         return scale_patterns.MAJOR_SCALE;
     }
 
-    if (strcmp(scale_t, scale_type.MINOR_SCALE) == 0)
-    {
+    if (strcmp(scale_t, scale_type.MINOR_SCALE) == 0) {
         return scale_patterns.MINOR_SCALE;
     }
 
-    if (strcmp(scale_t, scale_type.MAJOR_CHORDS) == 0)
-    {
+    if (strcmp(scale_t, scale_type.MAJOR_CHORDS) == 0) {
         return scale_patterns.MAJOR_CHORDS;
     }
-    if (strcmp(scale_t, scale_type.MINOR_CHORDS) == 0)
-    {
+    if (strcmp(scale_t, scale_type.MINOR_CHORDS) == 0) {
         return scale_patterns.MINOR_CHORDS;
     }
 
@@ -51,22 +43,19 @@ ScalePatternType get_scale_pattern(char *scale_t)
 }
 
 /* Create the harmonic circle */
-static char **create_harmonic_circle(ScalePatternType scale_pattern, char **note_scale)
-{
+static char **create_harmonic_circle(ScalePatternType scale_pattern, char **note_scale) {
     const int main_scale_size = get_scale_pattern(scale_type.MAJOR_SCALE).size;
     char **harmonic_circle = (char **)malloc(main_scale_size * sizeof(char *));
 
-    if (harmonic_circle == NULL)
-    {
+    if (harmonic_circle == NULL) {
         printf("Memory allocation for harmonic_circle failed.\n");
         return NULL;
     }
 
-    for (int index = 0; index < main_scale_size; index++)
-    {
+    for (int index = 0; index < main_scale_size; index++) {
         char *copy_note = (char *)malloc(strlen(note_scale[index]) + 4);
-        if (copy_note == NULL)
-        {
+
+        if (copy_note == NULL) {
             printf("Memory allocation for copy_note failed at index %d.\n", index);
             free_malloc(harmonic_circle, main_scale_size);
             return NULL;
@@ -75,13 +64,11 @@ static char **create_harmonic_circle(ScalePatternType scale_pattern, char **note
         strcpy(copy_note, note_scale[index]);
 
         // Add minor letter
-        if (scale_pattern.value[index] == 'm')
-        {
+        if (scale_pattern.value[index] == 'm') {
             strcat(copy_note, "m");
         }
         // Add dim at the end
-        else if (scale_pattern.value[index] == 'd')
-        {
+        else if (scale_pattern.value[index] == 'd') {
             strcat(copy_note, "dim");
         }
 
@@ -91,22 +78,18 @@ static char **create_harmonic_circle(ScalePatternType scale_pattern, char **note
 }
 
 /* Parses sharp notes to flat E.g: D# -> Eb*/
-static char *parse_sharp_to_flat(const char *note)
-{
+static char *parse_sharp_to_flat(const char *note) {
     char *copy_note = (char *)malloc(strlen(note));
-    if (copy_note != NULL)
-    {
+    if (copy_note != NULL) {
         strcpy(copy_note, note);
     }
 
-    if (strstr(note, "#") == NULL)
-    {
+    if (strstr(note, "#") == NULL) {
         return copy_note;
     }
 
     char *flat_note = (char *)malloc(4);
-    if (flat_note == NULL)
-    {
+    if (flat_note == NULL) {
         return copy_note;
     }
 
@@ -118,22 +101,18 @@ static char *parse_sharp_to_flat(const char *note)
 }
 
 // Write a flag (^) at the end of the 6th note to highlight the relative note
-static char *set_relative_note_flag(int index, const char *note)
-{
+static char *set_relative_note_flag(int index, const char *note) {
     char *copy_note = (char *)malloc(strlen(note));
-    if (copy_note != NULL)
-    {
+    if (copy_note != NULL) {
         strcpy(copy_note, note);
     }
 
-    if (index != 5)
-    {
+    if (index != 5) {
         return copy_note;
     }
 
     char *relative_note = (char *)malloc(strlen(note) + 4);
-    if (relative_note == NULL)
-    {
+    if (relative_note == NULL) {
         return copy_note;
     }
 
@@ -144,16 +123,14 @@ static char *set_relative_note_flag(int index, const char *note)
 }
 
 /* Get given scale from a single note */
-char **build_note_scale(const char *note, ScalePatternType scale_pattern)
-{
+char **build_note_scale(const char *note, ScalePatternType scale_pattern) {
     char **note_scale = (char **)malloc(get_scale_pattern(scale_type.MAJOR_SCALE).size * sizeof(char *));
 
     int note_index = find_index(note); // get the index of the note
     int scale_index = 0;               // Index to add the note to the scale
     int sp_index = 0;                  // to iterate the scale pattern
 
-    while (scale_index < chromatic_scale_size && sp_index < scale_pattern.size)
-    {
+    while (scale_index < chromatic_scale_size && sp_index < scale_pattern.size) {
         char *_note = (char *)chromatic_scale[note_index];
 
         // TODO: Parse sharp notes to flat using parse_sharp_to_flat() function
@@ -169,39 +146,32 @@ char **build_note_scale(const char *note, ScalePatternType scale_pattern)
 }
 
 /* Get all major scales */
-char ***build_scales(char *scale_t)
-{
+char ***build_scales(char *scale_t) {
     ScalePatternType scale_pattern = get_scale_pattern(scale_t);
     const int main_scale_size = get_scale_pattern(scale_type.MAJOR_SCALE).size;
     char ***note_scales = (char ***)malloc(main_scale_size * sizeof(char **));
 
-    if (note_scales == NULL)
-    {
+    if (note_scales == NULL) {
         printf("Memory allocation for {note_scales} has failed");
         return NULL;
     }
 
-    for (int index = 0; index < chromatic_scale_size; index++)
-    {
+    for (int index = 0; index < chromatic_scale_size; index++) {
         // Create new memory allocation to copy the note scale received.
         // It should be dynamic, because all scale patterns don't have the same size.
         note_scales[index] = (char **)malloc(scale_pattern.size * sizeof(char *));
 
-        if (note_scales[index] == NULL)
-        {
+        if (note_scales[index] == NULL) {
             printf("Memory allocation for note_scales failed at index %d.\n", index);
             free_malloc(note_scales[index], scale_pattern.size);
             return NULL;
         }
 
-        if (strcmp(scale_t, scale_type.HARMONIC_CIRCLE) == 0)
-        {
+        if (strcmp(scale_t, scale_type.HARMONIC_CIRCLE) == 0) {
             note_scales[index] = create_harmonic_circle(
                 scale_pattern,
                 build_note_scale(chromatic_scale[index], get_scale_pattern(scale_type.MAJOR_SCALE)));
-        }
-        else
-        {
+        } else {
             note_scales[index] = build_note_scale(chromatic_scale[index], scale_pattern);
         }
     }
