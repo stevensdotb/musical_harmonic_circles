@@ -12,14 +12,17 @@ static void print_scale_pattern(ScalePatternType scale_pattern);
 /* Parses sharp notes to flat E.g: F# -> Eb*/
 static char *parse_sharp_to_flat(const char *note);
 
+/* Write a flag (^) at the end of the note to highlight the relative note */
+static char *set_relative_note_flag(int index, const char *note);
+
 /* Gets the scale pattern by type */
 ScalePatternType get_scale_pattern(char *scale_type);
 
+/* Create harmonic circle relative notes scale */
+char **create_relative_harmonic_circle(char **harmonic_circle);
+
 /* Create the harmonic circle */
 static char **create_harmonic_circle(ScalePatternType scale_pattern, char **note_scale);
-
-// Write a flag (^) at the end of the note to highlight the relative note
-static char *set_relative_note_flag(int index, const char *note);
 
 /* Get given scale from a single note */
 char **build_note_scale(const char *note, ScalePatternType scale_pattern);
