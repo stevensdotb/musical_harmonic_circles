@@ -106,15 +106,15 @@ void print_musical_scale(char *scale_t) {
 		}
 
 		// Relative scale (harmonic circle)
-		// if (strcmp(scale_t, scale_type.HARMONIC_CIRCLE) == 0) {
-		// 	print_relative_note_harmonic_circle(scale_pattern, scale);
-		// }
+		if (strcmp(scale_t, scale_type.HARMONIC_CIRCLE) == 0) {
+			print_relative_note_harmonic_circle(scale_pattern, scale);
+		}
 
 		printf("\n");
     }
 
-    // free(note_scales);
-    // note_scales = NULL;
+    free(note_scales);
+    note_scales = NULL;
 }
 
 /* Prints the musical scale of the harmonic circle */
@@ -126,11 +126,11 @@ void print_relative_note_harmonic_circle(ScalePatternType scale_pattern, char **
         return;
     }
 
-    // printf("\n\t|__[ ");
-    // for (int ns_index = 0; ns_index < scale_pattern.size; ns_index++) {
-    //     printf("%d", relative[ns_index]);
-    // } 
-    // printf(" ]\n");
+    printf("\n\t|__[ ");
+    for (int ns_index = 0; ns_index < scale_pattern.size; ns_index++) {
+        printf("%s ", relative[ns_index]);
+    } 
+    printf(" ]\n");
 
     // free_malloc(relative, scale_pattern.size);
 }

@@ -70,7 +70,6 @@ char **create_relative_harmonic_circle(char **harmonic_circle) {
     char **relative = (char **)malloc(main_scale_size * sizeof(char *));
 
     if (relative == NULL) {
-        free_malloc(harmonic_circle, main_scale_size);
         return NULL;
     }
 
@@ -80,17 +79,19 @@ char **create_relative_harmonic_circle(char **harmonic_circle) {
 
     while (index <= main_scale_size) {
         relative[index] = harmonic_circle[note_index];
-        printf("%s ", relative[index]);
+
         note_index++;
 
-        if (note_index == main_scale_size) {
+        if (note_index == (main_scale_size - 1)) {
             note_index = 0;
         }
 
         // Finish the loop with the last note of the circle
-        if (note_index == 5) {
+        if (relative[index] == NULL && index == 6) {
             break;
         }
+
+        index++;
     }
 
     return relative;
@@ -109,7 +110,7 @@ static char **create_harmonic_circle(ScalePatternType scale_pattern, char **note
         char *copy_note = (char *)malloc(strlen(note_scale[index]) + 4);
 
         if (copy_note == NULL) {
-            free_malloc(harmonic_circle, main_scale_size);
+            // free_malloc(harmonic_circle, main_scale_size);
             return NULL;
         }
 
@@ -123,6 +124,8 @@ static char **create_harmonic_circle(ScalePatternType scale_pattern, char **note
         else if (scale_pattern.value[index] == 'd') {
             strcat(copy_note, "dim");
         }
+        
+        harmonic_circle[index] = copy_note;
     }
     return harmonic_circle;
 }
