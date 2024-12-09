@@ -20,7 +20,7 @@ static void print_scale_pattern(ScalePatternType scale_pattern) {
     // TODO: Print the scale pattern based on the scale type
 }
 
-/* Parses sharp notes to flat E.g: D# -> Eb*/
+/* TODO: Parses sharp notes to flat E.g: D# -> Eb*/
 static char *parse_sharp_to_flat(const char *note) {
     char *copy_note = (char *)malloc(strlen(note));
     if (copy_note != NULL) {

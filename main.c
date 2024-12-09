@@ -25,7 +25,9 @@ void clean_screen();
 int main(void) {
 	clean_screen();
 
+	int option;
 	char restart = 'y';
+
 	while (restart != 'n') {
 		printf("*************************************\n");
 		printf("╔╦╗╦ ╦╔═╗╦╔═╗╔═╗╦    ╔═╗╔═╗╔═╗╦  ╔═╗ \n");
@@ -41,11 +43,10 @@ int main(void) {
 		printf("[4] Minor Chords\n");
 		printf("[5] Harmonic Circles\n");
 		printf("[0] Exit\n");
-		printf("----------------------------\n");
-		int option;
+		printf("-------------------------------------\n");
 		printf("[>]: ");
 		scanf("%d", &option);
-		printf("----------------------------\n");
+		printf("-------------------------------------\n");
 
 		if (option == 0) {
 			clean_screen();
@@ -126,13 +127,12 @@ void print_relative_note_harmonic_circle(ScalePatternType scale_pattern, char **
         return;
     }
 
-    printf("\n\t|__[ ");
+    printf("\n[R]: ");
     for (int ns_index = 0; ns_index < scale_pattern.size; ns_index++) {
         printf("%s ", relative[ns_index]);
     } 
-    printf(" ]\n");
+    printf("\n");
 
-    // free_malloc(relative, scale_pattern.size);
 }
 
 void clean_screen() {
